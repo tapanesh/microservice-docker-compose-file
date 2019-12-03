@@ -1,0 +1,114 @@
+version: '3.7'
+services:
+
+#  rabbitmq:
+#    image: rabbitmq:3.5.3-management
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    restart: always
+#    networks:
+#      - currency-compose-network
+
+  ws-eureka-discovery:
+    image: altimetrik/ws-eureka-discovery:1.0
+    # build:
+      # context: ws-eureka-discovery
+      # dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - altimetrik-ms-network
+
+#  zipkin-server:
+#    image: openzipkin/zipkin
+#    container_name: zipkin
+#    environment:
+#      STORAGE_TYPE: mem
+#      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+#    ports:
+#      - "9411:9411"
+#    restart: always
+#    depends_on:
+#      - rabbitmq
+#    networks:
+#      - currency-compose-network
+
+
+  zuul-api-gateway:
+   image: altimetrik/api-gateway:1.0
+  #  build:
+    #  context: api-gateway
+    #  dockerfile: Dockerfile
+  #  environment:
+    #  RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+   ports:
+     - "8765:8765"
+   restart: always
+   depends_on:
+     - ws-eureka-discovery
+    #  - rabbitmq
+    #  - zipkin-server
+   networks:
+     - altimetrik-ms-network
+
+  user-service:
+    image: altimetrik/user-service:1.0
+    # build:
+      # context: user-service
+      # dockerfile: Dockerfile    
+#    environment:
+#      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    ports:
+      - "9997:9997"
+    restart: always
+    depends_on:
+      - ws-eureka-discovery
+#      - rabbitmq
+#      - zipkin-server
+    networks:
+      - altimetrik-ms-network
+
+  comment-service:
+    image: altimetrik/comment-service:1.0
+    # build:
+      # context: comment-service
+      # dockerfile: Dockerfile    
+    ports:
+      - "9999:9999"
+    restart: always
+#    environment:
+      #CURRENCY_EXCHANGE_URI: http://currency-exchange-service:8000
+#      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+#      - currency-exchange-service
+      - ws-eureka-discovery
+#      - rabbitmq
+#      - zipkin-server
+    networks:
+      - altimetrik-ms-network
+
+  task-service:
+    image: altimetrik/task-service:1.0
+    # build:
+      # context: task-service
+      # dockerfile: Dockerfile
+    ports:
+      - "9998:9998"
+    restart: always
+#    environment:
+    #CURRENCY_EXCHANGE_URI: http://currency-exchange-service:8000
+    #      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      #      - currency-exchange-service
+      - ws-eureka-discovery
+      - comment-service
+    #      - rabbitmq
+    #      - zipkin-server
+    networks:
+      - altimetrik-ms-network
+
+# Networks to be created to facilitate communication between containers
+networks:
+  altimetrik-ms-network:
