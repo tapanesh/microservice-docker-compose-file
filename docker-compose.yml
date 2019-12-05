@@ -11,7 +11,7 @@ services:
 #      - currency-compose-network
 
   ws-eureka-discovery:
-    image: altimetrik/ws-eureka-discovery:1.0
+    image: tapanesh/ws-eureka-discovery:1.0
     # build:
       # context: ws-eureka-discovery
       # dockerfile: Dockerfile
@@ -37,7 +37,7 @@ services:
 
 
   zuul-api-gateway:
-   image: altimetrik/api-gateway:1.0
+   image: tapanesh/api-gateway:1.0
   #  build:
     #  context: api-gateway
     #  dockerfile: Dockerfile
@@ -54,7 +54,7 @@ services:
      - altimetrik-ms-network
 
   user-service:
-    image: altimetrik/user-service:1.0
+    image: tapanesh/user-service:1.0
     # build:
       # context: user-service
       # dockerfile: Dockerfile    
@@ -71,7 +71,7 @@ services:
       - altimetrik-ms-network
 
   comment-service:
-    image: altimetrik/comment-service:1.0
+    image: tapanesh/comment-service:1.0
     # build:
       # context: comment-service
       # dockerfile: Dockerfile    
@@ -90,7 +90,7 @@ services:
       - altimetrik-ms-network
 
   task-service:
-    image: altimetrik/task-service:1.0
+    image: tapanesh/task-service:1.0
     # build:
       # context: task-service
       # dockerfile: Dockerfile
