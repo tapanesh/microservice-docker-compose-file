@@ -37,7 +37,6 @@ cd microservice-docker-compose-file/
 docker-compose up
 
 # Step-4 :  Open a new terminal tap ( Command + N) and type the below command  to see all the dockerized 
-images downloaded locally to your machine
 
 # $ docker images
 
