@@ -60,3 +60,58 @@ docker-compose up
   | 28eb4024e28b       |    tapanesh/api-gateway:1.0         |     "sh -c 'java -jar zu…"  |    11 minutes ago       |  Up 11 minutes      |    0.0.0.0:8765->8765/tcp, 9999/tcp   |   microservice-docker-compose-file_zuul-api-gateway_1  | 
   | 39971675f731          | tapanesh/ws-eureka-discovery:1.0     | "sh -c 'java -jar /t…"    |  11 minutes ago    |     Up 11 minutes      |    0.0.0.0:8761->8761/tcp         |       microservice-docker-compose-file_ws-eureka-discovery_1  | 
 
+
+# Microservices Application List: 
+|1.|  ws-eureka-discovery|
+|:---:|:----:|
+|2.| api-gateway|
+|3. |comment-service|
+|4.| user-service|
+|5. |task-service|
+
+
+# Accessing microservices endpoints without using the API Gateway 
+
+# 1. Get all users from user-service 
+
+e.g. http://localhost:9997/1
+
+Note: Simillarly you can try to find other 2 users details by specifying the userId as '2' and '3'
+
+# 2. Get all the comments from comment-service for a particular task 
+
+e.g. http://localhost:9999/comments/task11
+
+Note: Simillarly you can try to find other 2 hard coded task - 'task12'.
+
+# 3. Get all the task and it's comments details from task-service.
+
+e.g. http://localhost:9998/task11
+
+Note: Simillarly you can try to find the task and comment details for 'task12'
+
+
+
+
+# Accessing microservices endpoints with API Gateway 
+
+
+
+# 1. Get all users from user-service 
+
+e.g. http://localhost:8765/user-service/1
+
+Note: Simillarly you can try to find other 2 users details by specifying the userId as '2' and '3'
+
+# 2. Get all the comments from comment-service for a particular task 
+
+e.g. http://localhost:8765/comment-service/comments/task11
+
+Note: Simillarly you can try to find other 2 hard coded task - 'task12'.
+
+# 3. Get all the task and it's comments details from task-service.
+
+e.g. http://localhost:8765/task-service/task11
+
+Note: Simillarly you can try to find the task and comment details for 'task12'
+
